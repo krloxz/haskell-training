@@ -1,0 +1,4 @@
+{
+  "ghcSimple.replCommand": "cabal repl",
+  "editor.tabSize": 4
+}
