@@ -7,6 +7,8 @@
 
 module Types.Tree where
 
+import qualified Data.Foldable as F
+
 data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Eq)
 
 instance (Show a) => Show (Tree a) where
@@ -17,6 +19,11 @@ instance (Show a) => Show (Tree a) where
 instance Functor Tree where
     fmap f EmptyTree = EmptyTree
     fmap f (Node a left right) = Node (f a) (fmap f left) (fmap f right)
+
+instance F.Foldable Tree where
+    foldMap f EmptyTree = mempty
+    foldMap f (Node a left right) =
+        F.foldMap f left `mappend` f a `mappend` F.foldMap f right
 
 leaf :: a -> Tree a
 leaf x = Node x EmptyTree EmptyTree
