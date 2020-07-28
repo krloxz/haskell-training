@@ -40,14 +40,30 @@ in3' start = do
     start'' <- knightMoves start'
     knightMoves start''
 
+-- Dynamic version of 'in'
+inMoves :: Int -> KnightPosition -> [KnightPosition]
+inMoves moves start = return start >>= foldl (<=<) return (replicate moves knightMoves)
+
 -- >>> length $ in3 (6,2)
 -- >>> length $ in3' (6,2)
+-- >>> length $ inMoves 3 (6,2)
+-- 202
 -- 202
 -- 202
 --
 
 canReach :: KnightPosition -> KnightPosition -> Bool
 canReach start end = end `elem` in3 start
+
+-- Dynamic version of 'canReach'
+canReachIn :: Int -> KnightPosition -> KnightPosition -> Bool
+canReachIn moves start end = end `elem` inMoves moves start
+
+-- >>> (6,2) `canReach` (6,1)
+-- >>> canReachIn 3 (6,1) (6,2)
+-- True
+-- True
+--
 
 reach :: KnightPosition -> KnightPosition -> [[KnightPosition]]
 reach start end = do
@@ -57,6 +73,26 @@ reach start end = do
     guard (m3 == end)
     return [m1, m2, m3]
 
+-- Dynamic version of 'reach'
+reachIn :: Int -> KnightPosition -> KnightPosition -> [[KnightPosition]]
+reachIn n start end =
+    return [start]
+    >>= foldl (<=<) return (replicate n movesFromHead)
+    >>= \xss@(x:_) -> guard (x == end) >> (return . tail . reverse $ xss)
+    where
+        movesFromHead xs@(x:_) = fmap (:xs) $ knightMoves x
+
+reachIn3 :: KnightPosition -> KnightPosition -> [[KnightPosition]]
+reachIn3 = reachIn 3
+
+-- >>> return [(6,2)] >>= foldl (<=<) return (replicate 3 (\xs@(x:_) -> fmap (:xs) $ knightMoves x)) >>= (\xss@(x:_) -> guard (x == (6,1)) >> return xss )
+-- >>> return [(6,2)] >>= foldl (<=<) return (replicate 3 (\xs@(x:_) -> fmap (:xs) $ knightMoves x)) >>= ( \xss@(x:_) -> guard (x == (6,1)) >> return xss ) >>= (\xs -> return $ (tail.reverse) xs)
+-- >>> return [(6,2)] >>= foldl (<=<) return (replicate 3 (\xs@(x:_) -> fmap (:xs) $ knightMoves x)) >>= \xss@(x:_) -> guard (x == (6,1)) >> (return . tail . reverse $ xss)
 -- >>> (6,2) `reach` (6,1)
+-- >>> (6,2) `reachIn3` (6,1)
+-- [[(6,1),(7,3),(8,1),(6,2)],[(6,1),(8,2),(7,4),(6,2)],[(6,1),(5,3),(7,4),(6,2)],[(6,1),(5,3),(4,1),(6,2)],[(6,1),(7,3),(5,4),(6,2)],[(6,1),(4,2),(5,4),(6,2)]]
+-- [[(8,1),(7,3),(6,1)],[(7,4),(8,2),(6,1)],[(7,4),(5,3),(6,1)],[(4,1),(5,3),(6,1)],[(5,4),(7,3),(6,1)],[(5,4),(4,2),(6,1)]]
+-- [[(8,1),(7,3),(6,1)],[(7,4),(8,2),(6,1)],[(7,4),(5,3),(6,1)],[(4,1),(5,3),(6,1)],[(5,4),(7,3),(6,1)],[(5,4),(4,2),(6,1)]]
+-- [[(8,1),(7,3),(6,1)],[(7,4),(8,2),(6,1)],[(7,4),(5,3),(6,1)],[(4,1),(5,3),(6,1)],[(5,4),(7,3),(6,1)],[(5,4),(4,2),(6,1)]]
 -- [[(8,1),(7,3),(6,1)],[(7,4),(8,2),(6,1)],[(7,4),(5,3),(6,1)],[(4,1),(5,3),(6,1)],[(5,4),(7,3),(6,1)],[(5,4),(4,2),(6,1)]]
 --
