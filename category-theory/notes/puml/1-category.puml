@@ -1,0 +1,131 @@
+@startuml Arrow
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  A -> B [label="f"]
+}
+@enduml
+
+@startuml Composition
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  A -> B [label="f"]
+  B -> C [label="g"]
+  A -> C [label="g . f"]
+}
+@enduml
+
+@startuml Associativity
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  A -> B [label="f"]
+  B -> C [label="g"]
+  C -> D [label="h"]
+  A -> C [label="g . f"]
+  B -> D [label="h . g"]
+}
+@enduml
+
+@startuml Identity
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  A -> B [label="f"]
+  A -> A [label="id"]
+  B -> B [label="id"]
+}
+@enduml
+
+@startuml Category
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  A -> B [label="f"]
+  B -> C [label="g"]
+  A -> C [label="g . f"]
+  A -> A [label="id"]
+  B -> B [label="id"]
+  C -> C [label="id"]
+}
+@enduml
+
+@startuml WWW_Category
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  Google -> "Stack Overflow" [label="result link for query\n'coding help'"]
+  "Stack Overflow" -> GitHub [label="link to code example"]
+  Google -> GitHub [label="\n\nresult link for query\n'code repo'"]
+  Google -> Google [label="link to home page"]
+  "Stack Overflow" -> "Stack Overflow" [label="link to home page"]
+  GitHub -> GitHub [label="link to home page"]
+}
+@enduml
+
+@startuml Haskell_Category
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  "List[Int]" -> Int [label="head"]
+  Int -> String [label="show"]
+  "List[Int]" -> String [label="\nshow . head"]
+  "List[Int]"  -> "List[Int]"  [label="id"]
+  Int -> Int [label="id"]
+  String -> String [label="id"]
+}
+@enduml
+
+
+@startuml Set Product
+digraph G {
+
+  //layout = circo;
+  //rankdir=LR;
+  style = rounded;
+  edge [arrowhead = open];
+
+  subgraph cluster_setA {
+    label = "Set A";
+    node [shape=circle];
+    edge [style=invis]
+    a1 -> a2;
+  }
+
+  subgraph cluster_setB {
+    label = "Set B";
+    node [shape=circle];
+    edge [style=invis]
+    b1 -> b2 -> b3;
+  }
+  
+  subgraph cluster_setAxB {
+    label = "Set AxB";
+    edge [style=invis];
+    c1 -> c2 -> c3 -> c4 -> c5 -> c6;
+  }
+
+  {a1 b1} -> c1;
+  {a1 b2} -> c2;
+  {a1 b3} -> c3;
+  {a2 b1} -> c4;
+  {a2 b2} -> c5;
+  {a2 b3} -> c6;
+  
+  c1 [label="a1,b1"];
+  c2 [label="a1,b2"];
+  c3 [label="a1,b3"];
+  c4 [label="a2,b1"];
+  c5 [label="a2,b2"];
+  c6 [label="a2,b3"];
+
+}
+@enduml
