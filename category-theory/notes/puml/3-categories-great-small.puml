@@ -1,0 +1,66 @@
+@startuml Preorder
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+
+  A -> B [label="≤"]
+  B -> C [label="≤"]
+  A -> C [label="≤"]
+  B -> A [label="≤"]
+  A -> A [label="≤"]
+  B -> B [label="≤"]
+  C -> C [label="≤"]
+
+  D -> E [label="≤"]
+  D -> D [label="≤"]
+  E -> E [label="≤"]
+}
+@enduml
+
+@startuml Partial Order
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+
+  A -> B [label="="]
+  B -> C [label="≤"]
+  A -> C [label="≤"]
+  A -> A [label="≤"]
+  B -> B [label="≤"]
+  C -> C [label="≤"]
+
+  D -> E [label="≤"]
+  D -> D [label="≤"]
+  E -> E [label="≤"]
+}
+@enduml
+
+@startuml Total Order
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+
+  A -> B [label="="]
+  A -> C [label="≤"]
+  A -> D [label="≤"]
+  B -> C [label="≤"]
+  B -> D [label="≤"]
+  C -> D [label="≤"]
+
+  A -> A [label="≤"]
+  B -> B [label="≤"]
+  C -> C [label="≤"]
+  D -> D [label="≤"]
+}
+@enduml
+
+
+@startuml Monoid
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+
+  N -> N [label="+0, +a, +b, +a+b"]
+  
+}
+@enduml
