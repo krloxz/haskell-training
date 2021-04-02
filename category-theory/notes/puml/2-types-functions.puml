@@ -1,0 +1,15 @@
+@startuml Hask Sample
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  Void -> Unit [label="absurd"]
+  Void -> Bool [label="absurd"]
+  Void -> Void [label="id"]
+  Unit -> Bool [label="false"]
+  Unit -> Bool [label="true"]
+  Unit -> Unit [label="id"]
+  Bool -> Unit [label="unit"]
+  Bool -> Bool [label="id"]
+}
+@enduml
