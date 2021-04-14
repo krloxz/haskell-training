@@ -1,0 +1,18 @@
+@startuml Kleisli Catgory
+digraph G {
+  ' rankdir=LR
+  edge [arrowhead=open]
+  
+  mA -> mB -> mC [color=white]
+  A -> B -> C [color=white]
+
+  A -> mA [label="id"]
+  A -> mB [label="f"]
+  A -> mC [label="g . f"]
+  
+  B -> mB [label="id"]
+  B -> mC [label="g"]
+
+  C -> mC [label="id"]
+}
+@enduml
