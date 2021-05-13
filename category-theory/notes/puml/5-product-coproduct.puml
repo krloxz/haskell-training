@@ -1,0 +1,99 @@
+@startuml Isomorphism
+digraph G {
+  rankdir=LR
+  edge [arrowhead=open]
+  
+  A -> B [label=f]
+  B -> A [label=g]
+  A -> A [label=id]
+  B -> B [label=id]
+}
+@enduml
+
+@startuml Initial Object
+digraph G {
+  edge [arrowhead=open]
+  {rank=same A B}
+  
+  A -> B -> A
+  A -> C
+  A -> D
+  A -> E
+
+  B -> C
+  B -> D
+  B -> E
+}
+@enduml
+
+@startuml Terminal Object
+digraph G {
+  edge [arrowhead=open]
+  {rank=same A B}
+  
+  A -> B -> A
+  C -> A
+  D -> A
+  E -> A
+
+  C -> B
+  D -> B
+  E -> B
+}
+@enduml
+
+@startuml Product
+digraph G {
+  edge [arrowhead=open]
+  
+  C -> A [label=p]
+  C -> B [label=q]
+
+  "C'" -> C [style="dashed" label=m];
+  "C'" -> A [label="p'"]
+  "C'" -> B [label="q'"]
+  
+}
+@enduml
+
+@startuml Coproduct
+digraph G {
+  edge [arrowhead=open]
+  
+  A -> C [label=i]
+  B -> C [label=j]
+
+  C -> "C'" [style="dashed" label=m];
+  A -> "C'" [label="i'"]
+  B -> "C'" [label="j'"]
+  
+}
+@enduml
+
+@startuml Poset Product
+digraph G {
+  edge [arrowhead=open label="<="]
+  
+  X -> Y
+  X -> Z
+
+  A -> X [style="dashed"];
+  A -> Y
+  A -> Z
+  
+}
+@enduml
+
+@startuml Poset Coproduct
+digraph G {
+  edge [arrowhead=open label="<="]
+  
+  A -> C
+  B -> C
+
+  C -> Z [style="dashed"];
+  A -> Z
+  B -> Z
+  
+}
+@enduml
