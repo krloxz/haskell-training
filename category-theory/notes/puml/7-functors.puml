@@ -1,0 +1,60 @@
+@startuml Functor
+digraph G {
+  nodesep=1
+  edge [arrowhead=open]
+
+  subgraph cluster_C {
+		label = <<b>C</b>>
+    style = rounded;
+    bgcolor = aliceblue
+
+    a -> b [label=f]
+    b -> c [label=g]
+    a -> c [label="g . f"]
+    a -> a [label=<id<sub>a</sub>>]
+	}
+
+  subgraph cluster_D {
+		label = <<b>D</b>>
+    style = rounded;
+    bgcolor = floralwhite
+
+    Fa -> Fb [label=Ff]
+    Fb -> Fc [label=Fg]
+    Fa -> Fc [label="Fg . Ff"]
+    Fa -> Fa [label=<id<sub>Fa</sub>>]
+	}
+
+  a -> Fa [label=<<b>F</b>> fontcolor=red style=dashed]
+  b -> Fb [label=<<b>F</b>> fontcolor=red style=dashed]
+  c -> Fc [label=<<b>F</b>> fontcolor=red style=dashed]
+}
+@enduml
+
+@startuml Reader Functor
+digraph G {
+  nodesep=1
+  edge[arrowhead=open]
+
+  subgraph cluster_types {
+		label=<<b>Category of Types</b>>
+    style=rounded
+    bgcolor=aliceblue
+
+    a -> b [label="a -&gt; b"]
+    a -> a [label="id a"]
+	}
+
+  subgraph cluster_functions {
+		label=<<b>Category of Functions</b>>
+    style=rounded;
+    bgcolor=floralwhite
+
+    "r -&gt; a" -> "r -&gt; b" [label="r -&gt; a -&gt; b"]
+    "r -&gt; a" -> "r -&gt; a" [label="r -&gt; id a"]
+	}
+
+  a -> "r -&gt; a" [label=<<b>(-&gt;) r</b>> fontcolor=red style=dashed]
+  b -> "r -&gt; b" [label=<<b>(-&gt;) r</b>> fontcolor=red style=dashed]
+}
+@enduml
