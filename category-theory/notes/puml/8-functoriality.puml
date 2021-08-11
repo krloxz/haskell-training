@@ -1,0 +1,74 @@
+@startuml Bifunctor
+digraph G {
+  nodesep = .7
+  edge [arrowhead=open]
+
+  subgraph cluster_C {
+		label = <<b>C</b>>
+    style = rounded
+    bgcolor = AliceBlue
+
+    a -> b [label=f]
+    b -> c [label=g]
+    a -> c [label="g . f"]
+    a -> a [label=<id<sub>a</sub>>]
+
+    connector1 [style=invis]
+    c -> connector1 [style=invis]
+	}
+
+  subgraph cluster_D {
+		label = <<b>D</b>>
+    style = rounded;
+    bgcolor = FloralWhite
+
+    x -> y [label=m]
+    y -> z [label=n]
+    x -> z [label="n . m"]
+    x -> x [label=<id<sub>x</sub>>]
+
+    connector2 [style=invis]
+    z -> connector2 [style=invis]
+	}
+
+  subgraph cluster_CxD {
+		label = <<b>C x D</b>>
+    style = rounded;
+    bgcolor = LavenderBlush
+    ax [label="(a, x)"]
+    by [label="(b, y)"]
+    cz [label="(c, z)"]
+
+    ax -> by [label="(f, m)"]
+    by -> cz [label="(g, n)"]
+    ax -> cz [label="(g, n) . (f, m)\nor\n(g . f, n . m)"]
+    ax -> ax [label=<(id<sub>a</sub>, id<sub>x</sub>)>]
+
+    connector3[style=invis]
+    connector4[style=invis]
+    connector3 -> ax[style=invis]
+    connector4 -> ax[style=invis]
+	}
+
+  connector1 -> connector3 [penwidth=5, arrowhead=normal]
+  connector2 -> connector4 [penwidth=5, arrowhead=normal]
+
+  subgraph cluster_E {
+		label = <<b>E</b>>
+    style = rounded;
+    bgcolor = WhiteSmoke
+    Fax [label="F(a, x)"]
+    Fby [label="F(b, y)"]
+    Fcz [label="F(c, z)"]
+
+    Fax -> Fby [label="F(f, m)"]
+    Fby -> Fcz [label="F(g, n)"]
+    Fax -> Fcz [label="F(g, n) . F(f, m)\nor\nF(g . f, n . m)"]
+    Fax -> Fax [label=<id<sub>F(a, x)</sub>>]
+	}
+
+  ax -> Fax [label=<<b>F</b>> fontcolor=red style=dashed]
+  by -> Fby [label=<<b>F</b>> fontcolor=red style=dashed]
+  cz -> Fcz [label=<<b>F</b>> fontcolor=red style=dashed]
+}
+@enduml
