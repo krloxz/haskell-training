@@ -1,0 +1,106 @@
+@startuml Kleisli Category
+digraph G {
+  edge [arrowhead=open]
+
+  a -> b -> c -> d [style="invis"]
+
+  a -> a [label=return]
+  b -> b [label=return]
+  c -> c [label=return]
+  d -> d [label=return]
+  
+  a -> b [label=f]
+  b -> c [label=g]
+  c -> d [label=h]
+
+  a -> c [label="f >=> g"]
+  b -> d [label="g >=> h"]
+}
+@enduml
+
+@startuml Monad
+digraph G {
+  edge [arrowhead=open]
+
+  node [color="black", fontcolor="black"]
+  a -> b -> c -> d [style="invis"]
+
+  node [color="blue", fontcolor="blue"]
+  ma [label="m a"]
+  mb [label="m b"]
+  mc [label="m c"]
+  md [label="m d"]
+
+  edge [style="solid", color="blue", fontcolor="blue"]
+  a -> ma [label=return]
+  b -> mb [label=return]
+  c -> mc [label=return]
+  d -> md [label=return]
+  
+  edge [style="solid", color="black", fontcolor="black"]
+  a -> mb [label=f]
+  b -> mc [label=g]
+  c -> md [label=h]
+
+  edge [style="solid", color="blue", fontcolor="blue"]
+  a -> mc [label="f >>= g"]
+  b -> md [label="g >>= h"]
+
+  edge [style="solid", color="blue", fontcolor="blue"]
+  ma -> mb [label=">>= f"]
+  mb -> mc [label=">>= g"]
+  mc -> md [label=">>= h"]
+  mb -> mb [label=">>= return"]
+  ' mb -> b  [label=">>="]
+}
+@enduml
+
+@startuml Functorial Monad
+digraph G {
+  edge [arrowhead=open]
+
+  node [color="gray", fontcolor="gray"]
+  a -> b -> c -> d [style="invis"]
+
+  node [color="black", fontcolor="black"]
+  ma [label="m a"]
+  mb [label="m b"]
+  mc [label="m c"]
+  md [label="m d"]
+
+  edge [style="solid", color="black", fontcolor="black"]
+  a -> ma [label=return]
+  b -> mb [label=return]
+  c -> mc [label=return]
+  d -> md [label=return]
+  
+  edge [style="solid", color="gray", fontcolor="gray"]
+  a -> mb [label=f]
+  b -> mc [label=g]
+  c -> md [label=h]
+
+  edge [style="solid", color="black", fontcolor="black"]
+  a -> mc [label="f >>= g"]
+  b -> md [label="g >>= h"]
+
+  edge [style="solid", color="black", fontcolor="black"]
+  ma -> mb [label=">>= f"]
+  mb -> mc [label=">>= g"]
+  mc -> md [label=">>= h"]
+  mb -> mb [label=">>= return"]
+
+  node [color="blue", fontcolor="blue"]
+  mmb [label="m (m b)"]
+  mmc [label="m (m c)"]
+  mmd [label="m (m d)"]
+
+  edge [style="solid", color="blue", fontcolor="blue"]
+  ma -> mmb [label="fmap f"]
+  mmb -> mb [label=join]
+  mb -> mmc [label="fmap g"]
+  mmc -> mc [label=join]
+  mc -> mmd [label="fmap h"]
+  mmd -> md [label=join]
+  mb -> mmb [label="fmap return"]
+}
+@enduml
