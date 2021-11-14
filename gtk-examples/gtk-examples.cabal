@@ -1,0 +1,33 @@
+cabal-version:      2.4
+name:               gtk-examples
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+-- The license under which the package is released.
+-- license:
+author:             Carlos Gomez
+maintainer:         isc.carlos.gomez@gmail.com
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files: CHANGELOG.md
+
+executable ListStore
+    main-is:          ListStore.hs
+    build-depends:    base >= 4 && < 5,
+                      gi-gtk == 3.0.*,
+                      gi-gio == 2.0.28,
+                      haskell-gi-base,
+                      text == 1.2.4.1,
+                      format-numbers == 0.1.0.1
+    hs-source-dirs:   src
+    default-language: Haskell2010
