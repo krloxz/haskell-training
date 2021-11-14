@@ -5,6 +5,8 @@
 -----------------------------------------------------------------------------
 module Monoids where
 
+import Control.Monad
+
 newtype And = And Bool deriving (Show, Eq)
 
 instance Semigroup And where
@@ -59,4 +61,23 @@ instance Integral a => Monoid (SumMod3 a) where
 -- >>> -- Associativity
 -- >>> sumMod3 2 <> (sumMod3 1 <> sumMod3 4) == (sumMod3 2 <> sumMod3 1) <> sumMod3 4
 -- True
+--
+
+
+triples :: [(Int, Int, Int)]
+triples = do
+    x <- [1 .. 2]
+    y <- [3 .. 4]
+    z <- [5 .. 6]
+    return (x, y, z)
+
+-- >>> triples
+-- [(1,3,5),(1,3,6),(1,4,5),(1,4,6),(2,3,5),(2,3,6),(2,4,5),(2,4,6)]
+--
+
+--triples' :: [a]
+triples' = [1 .. 2] >>= \x -> [3 .. 4] >>= \y -> [5 .. 6] >>= \z -> return (x, y, z)
+
+-- >>> triples'
+-- [(1,3,5),(1,3,6),(1,4,5),(1,4,6),(2,3,5),(2,3,6),(2,4,5),(2,4,6)]
 --
