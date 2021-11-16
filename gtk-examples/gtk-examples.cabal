@@ -31,3 +31,13 @@ executable ListStore
                       format-numbers == 0.1.0.1
     hs-source-dirs:   src
     default-language: Haskell2010
+
+executable TreeStore
+    main-is:          TreeStore.hs
+    build-depends:    base >= 4 && < 5,
+                      gi-gtk == 3.0.*,
+                      gi-gio == 2.0.28,
+                      haskell-gi-base,
+                      text == 1.2.4.1
+    hs-source-dirs:   src
+    default-language: Haskell2010
